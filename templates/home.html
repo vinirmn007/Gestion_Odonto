@@ -1,1 +1,55 @@
-putoooooooooooooos
+{% extends 'base.html' %}
+
+{% block title %} Inicio {% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <h2 class="mb-4">Citas del Día</h2>
+        <div class="calendar-container">
+            <div class="calendar-header p-3">
+                <h3 class="text-center m-0">17 de Enero, 2024</h3>
+            </div>
+            <div class="p-3">
+                <div class="list-group">
+                    <div class="list-group-item">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">09:00 AM - Juan García</h5>
+                            <small class="text-primary">Control</small>
+                        </div>
+                        <p class="mb-1">Consulta de seguimiento</p>
+                    </div>
+                    <div class="list-group-item">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">10:30 AM - María López</h5>
+                            <small class="text-success">Primera Consulta</small>
+                        </div>
+                        <p class="mb-1">Evaluación general</p>
+                    </div>
+                    <div class="list-group-item">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">11:45 AM - Pedro Ramírez</h5>
+                            <small class="text-warning">Urgencia</small>
+                        </div>
+                        <p class="mb-1">Dolor abdominal</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <h2 class="mb-4">Acciones Rápidas</h2>
+        <div class="action-buttons d-grid gap-2">
+            <button class="btn btn-secondary">
+                <i class="bi bi-calendar-plus me-2"></i>Agendar Cita Médica
+            </button>
+            <button class="btn btn-secondary">
+                <i class="bi bi-file-earmark-text me-2"></i>Visualizar Recetas Médicas
+            </button>
+            <button class="btn btn-secondary">
+                <i class="bi bi-journal-medical me-2"></i>Visualizar Historial Médico
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}

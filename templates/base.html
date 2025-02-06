@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_base.css') }}">
+    {% block styles %}{% endblock %}
+</head>
+
+<body>
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="user-profile">
+                <img src="img.jpg" alt="Usuario">
+                <h6 class="mb-0">Dr. Juan Pérez</h6>
+                <small>Odontologo</small>
+            </div>
+            <ul class="nav flex-column mt-3">
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="bi bi-house-door me-2"></i> Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="agenda.html"><i class="bi bi-calendar me-2"></i> Agenda</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="bi bi-calendar-plus me-2"></i> Agendar cita</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-bs-toggle="collapse" data-bs-target="#turnoSubmenu"
+                        aria-expanded="false">
+                        <i class="bi bi-calendar-week me-2"></i> Citas
+                        <i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <div class="collapse" id="turnoSubmenu">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link ps-4" href="#"> Ver citas agendadas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link ps-4" href="#"> Ver citas en espera</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link ps-4" href="#"> Ver citas finalizadas</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="bi bi-people me-2"></i> Pacientes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="bi bi-clipboard-heart me-2"></i> Atender cita</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-grow-1">
+            <!-- Flash -->
+            {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+            <div class="flash-message-container">
+                {% for category, message in messages %}
+                {% for category, message in messages %}
+                    {% if category == 'error' %}
+                    {% set categoria = 'danger' %}
+                    {% else %}
+                    {% set categoria = category %}
+                    {% endif %}
+                    <div class="alert alert-{{ categoria }}" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
+            <!-- Top Bar -->
+            <div class="top-bar d-flex justify-content-between align-items-center">
+                <div>
+                    <h4 class="mb-0">OdontoCitas</h4>
+                </div>
+                <div class="d-flex align-items-center">
+                    <a href="#" class="btn btn-light position-relative me-3">
+                        <i class="bi bi-bell"></i>
+                        <span
+                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill notification-badge">
+                            3
+                        </span>
+                    </a>
+                    <a href="#" class="btn btn-light position-relative me-3">
+                        <i class="bi bi-envelope"></i>
+                        <span
+                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill notification-badge">
+                            5
+                        </span>
+                    </a>
+                    <a href="#" class="btn btn-light">
+                        <i class="bi bi-gear"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                {% block content %}
+
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var collapseElementList = [].slice.call(document.querySelectorAll('.sidebar .collapse'))
+            var collapseList = collapseElementList.map(function (collapseEl) {
+                return new bootstrap.Collapse(collapseEl, { toggle: false })
+            })
+
+            document.querySelectorAll('.sidebar .nav-link[data-bs-toggle="collapse"]').forEach(function (element) {
+                element.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    element.setAttribute('aria-expanded', element.getAttribute('aria-expanded') === 'true' ? 'false' : 'true');
+                });
+            });
+        });
+    </script>
+    {% block scripts %}{% endblock %}
+</body>
+
+</html>
