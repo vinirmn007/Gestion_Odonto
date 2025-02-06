@@ -5,10 +5,10 @@ from config import app
 from controller.users_con import user_controller
 
 #Rutas de vistas
-from views.login_view import login_view
+from views.users_view import user_view
 
 app.register_blueprint(user_controller)
-app.register_blueprint(login_view)
+app.register_blueprint(user_view)
 
 if __name__ == '__main__':
     app.secret_key = 'key-gestion-ondontonenas'

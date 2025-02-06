@@ -17,27 +17,26 @@
                 {% if messages %}
                 <div class="flash-message-container">
                     {% for category, message in messages %}
-                    {% for category, message in messages %}
-                    {% if category == 'error' %}
-                    {% set categoria = 'danger' %}
-                    {% else %}
-                    {% set categoria = category %}
-                    {% endif %}
-                    <div class="alert alert-{{ categoria }}" role="alert">
-                        {{ message }}
-                    </div>
+                        {% if category == 'error' %}
+                            {% set categoria = 'danger' %}
+                        {% else %}
+                            {% set categoria = category %}
+                        {% endif %}
+                        <div class="alert alert-{{ categoria }}" role="alert">
+                            {{ message }}
+                        </div>
                     {% endfor %}
                 </div>
                 {% endif %}
                 {% endwith %}
-                <form>
+                <form action="/login" method="POST">
                     <div class="mb-3">
                         <label for="loginUsuario" class="form-label">Usuario</label>
-                        <input type="text" class="form-control" id="loginUsuario" required>
+                        <input type="text" class="form-control" id="loginUsuario" name="usuario" required>
                     </div>
                     <div class="mb-3">
                         <label for="loginPassword" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" id="loginPassword" required>
+                        <input type="password" class="form-control" id="loginPassword" name="contrasena" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Ingresar</button>
                 </form>

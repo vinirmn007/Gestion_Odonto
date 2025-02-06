@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% block title %}Listado de Pacientes{% endblock %}
+{% block content %}
+<h2>Listado de Pacientes</h2>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellidos</th>
+            <th scope="col">Fecha de Nacimiento</th>
+            <th scope="col">Email</th>
+            <th scope="col">Celular</th>
+            <th scope="col">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for persona in personas %}
+        <tr scope="row">
+            <td>{{ persona.nombres }}</td>
+            <td>{{ persona.apellidos }}</td>
+            <td>{{ persona.fecha_nacimiento }}</td>
+            <td>{{ persona.email }}</td>
+            <td>{{ persona.celular }}</td>
+            <td>
+                <a href="/pacientes/{{ persona.identificacion }}" class="btn btn-primary me-2">
+                    <i class="bi bi-pencil-square me-1"></i> Ver
+                </a>
+                <button class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#editModal"
+                    onclick="fillEditForm('{{ persona.identificacion }}', '{{ persona.nombres }}', '{{ persona.apellidos }}', '{{ persona.email }}', '{{ persona.celular }}')">
+                    <i class="bi bi-pencil-square me-1"></i> Editar
+                </button>
+                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"
+                    onclick="setDeleteId('{{ persona.identificacion }}')">
+                    <i class="bi bi-trash me-1"></i> Eliminar
+                </button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Modal de Edición -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Editar Paciente</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editForm" method="POST" action="/pacientes/update">
+                    <input type="hidden" name="id" id="editId">
+                    <div class="mb-3">
+                        <label for="editNombres" class="form-label">Nombres</label>
+                        <input type="text" class="form-control" id="editNombres" name="nombres" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editApellidos" class="form-label">Apellidos</label>
+                        <input type="text" class="form-control" id="editApellidos" name="apellidos" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="editEmail" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editCelular" class="form-label">Celular</label>
+                        <input type="text" class="form-control" id="editCelular" name="celular" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Eliminación -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirmar Eliminación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Está seguro de que desea eliminar este paciente?
+            </div>
+            <div class="modal-footer">
+                <form id="deleteForm" method="POST" action="/pacientes/delete">
+                    <input type="hidden" name="id" id="deleteId">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function fillEditForm(id, nombres, apellidos, email, celular) {
+        document.getElementById('editId').value = id;
+        document.getElementById('editNombres').value = nombres;
+        document.getElementById('editApellidos').value = apellidos;
+        document.getElementById('editEmail').value = email;
+        document.getElementById('editCelular').value = celular;
+        console.log(id, nombres, apellidos, email, celular);
+    }
+
+    function setDeleteId(id) {
+        document.getElementById('deleteId').value = id;
+    }
+</script>
+{% endblock %}

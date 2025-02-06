@@ -16,13 +16,13 @@
         <!-- Sidebar -->
         <div class="sidebar">
             <div class="user-profile">
-                <img src="img.jpg" alt="Usuario">
+                <img src="{{ url_for('static', filename='images/profile_def.png') }}" alt="Usuario">
                 <h6 class="mb-0">Dr. Juan Pérez</h6>
                 <small>Odontologo</small>
             </div>
             <ul class="nav flex-column mt-3">
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="bi bi-house-door me-2"></i> Inicio</a>
+                    <a class="nav-link" href="/home"><i class="bi bi-house-door me-2"></i> Inicio</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="agenda.html"><i class="bi bi-calendar me-2"></i> Agenda</a>
@@ -51,7 +51,7 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="bi bi-people me-2"></i> Pacientes</a>
+                    <a class="nav-link" href="/pacientes/all"><i class="bi bi-people me-2"></i> Pacientes</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#"><i class="bi bi-clipboard-heart me-2"></i> Atender cita</a>
@@ -65,7 +65,6 @@
             {% with messages = get_flashed_messages(with_categories=True) %}
             {% if messages %}
             <div class="flash-message-container">
-                {% for category, message in messages %}
                 {% for category, message in messages %}
                     {% if category == 'error' %}
                     {% set categoria = 'danger' %}
@@ -82,7 +81,7 @@
             <!-- Top Bar -->
             <div class="top-bar d-flex justify-content-between align-items-center">
                 <div>
-                    <h4 class="mb-0">OdontoCitas</h4>
+                    <h1 class="mb-0 fw-bold">OdontoCitas</h1>
                 </div>
                 <div class="d-flex align-items-center">
                     <a href="#" class="btn btn-light position-relative me-3">

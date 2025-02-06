@@ -1,0 +1,80 @@
+
+{% extends "base.html" %}
+{% block title %}Información de Paciente{% endblock %}
+{% block content %}
+<style>
+    .profile-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f8f9fa;
+        margin: 30px;
+    }
+    .profile-card {
+        width: 90%;
+        max-width: 1200px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+    }
+    .profile-img {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        margin-bottom: 20px;
+    }
+    .profile-info {
+        border-left: 3px solid #007bff;
+        padding-left: 30px;
+    }
+    .profile-info div {
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+    .btn-container {
+        margin-top: 30px;
+    }
+</style>
+<div class="right_col" role="main">
+    <div class="">
+            <div class="title_left">
+                <a href="/pacientes/all" class="btn btn-dark">Atrás</a>
+                <h3 class="mt-4">Bienvenido <strong>{{paciente.nombres}} {{paciente.apellidos}}</strong></h3>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="profile-container">
+            <div class="profile-card row">
+                <!-- Sección de Perfil -->
+                <div class="col-md-4 text-center">
+                    <img src="{{url_for('static', filename='images/profile_def.png')}}" alt="Foto de perfil" class="profile-img">
+                    <h2 class="fw-bold">{{ paciente.nombres }} {{ paciente.apellidos }}</h2>                    
+                </div>
+                <!-- Sección de Información -->
+                <div class="col-md-8 profile-info">
+                    <div><strong>Fecha de Nacimiento:</strong> {{ paciente.fecha_nacimiento }}</div>
+                    <div><strong>Edad:</strong> {{ edad }} años</div>
+                    <div><strong>Email:</strong> {{ paciente.email }}</div>
+                    <div><strong>Celular:</strong> {{ paciente.celular }}</div>
+                    <div class="text-start mt-4">
+                        <a href="#" class="btn btn-success btn-lg"> Editar</a>
+                    </div>
+                    <div class="text-start mt-4">
+                        {% if paciente.cod_historial is not none %}
+                            <a href="#" class="btn btn-info btn-lg">
+                                 Ver Historial Médico
+                            </a>
+                        {% else %}
+                            <a href="#" class="btn btn-warning btn-lg">
+                                 Registrar Historial Médico
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
