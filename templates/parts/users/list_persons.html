@@ -29,10 +29,12 @@
                     onclick="fillEditForm('{{ persona.identificacion }}', '{{ persona.nombres }}', '{{ persona.apellidos }}', '{{ persona.email }}', '{{ persona.celular }}')">
                     <i class="bi bi-pencil-square me-1"></i> Editar
                 </button>
+                <!--
                 <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"
                     onclick="setDeleteId('{{ persona.identificacion }}')">
                     <i class="bi bi-trash me-1"></i> Eliminar
                 </button>
+                -->
             </td>
         </tr>
         {% endfor %}
@@ -74,6 +76,7 @@
 </div>
 
 <!-- Modal de Eliminación -->
+<!--
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -94,6 +97,7 @@
         </div>
     </div>
 </div>
+-->
 {% endblock %}
 
 {% block scripts %}

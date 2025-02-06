@@ -113,3 +113,18 @@ def delete_persona():
     else:
         flash('Error al eliminar la persona: ' + str(data), 'error')
         return redirect(request.referrer)
+    
+@user_view.route('/logout')
+def logout():
+    session.clear()
+    return redirect('/login')
+
+@user_view.route('/admin')
+def admin():
+    r = requests.get('http://localhost:5000/bd/personas/all')
+    data = r.json().get('data')
+    if r.status_code == 200:
+        return render_template('/parts/admin/admin.html', usuarios=data)
+    else:
+        flash('Error al obtener las personas: ' + str(data), 'error')
+        return redirect(request.referrer)

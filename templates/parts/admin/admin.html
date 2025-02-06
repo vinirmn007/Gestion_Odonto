@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Administración de Roles</h2>
+
+    <!-- Lista de roles existentes -->
+    <div class="card mb-4">
+        <div class="card-header">Roles Existentes</div>
+        <div class="card-body">
+            <ul class="list-group">
+                {% for rol in roles %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ rol }}
+                    <form method="POST" action="#" class="d-inline">
+                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                    </form>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    
+    <!-- Formulario para crear un nuevo rol -->
+    <div class="card mb-4">
+        <div class="card-header">Crear Nuevo Rol</div>
+        <div class="card-body">
+            <form method="POST" action="#">
+                <div class="mb-3">
+                    <label for="rol" class="form-label">Nombre del Rol</label>
+                    <input type="text" class="form-control" id="rol" name="rol" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Crear Rol</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Tabla de usuarios registrados -->
+    <div class="card">
+        <div class="card-header">Usuarios Registrados</div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombres</th>
+                        <th>Apellidos</th>
+                        <th>Rol</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for usuario in usuarios %}
+                    <tr>
+                        <td>{{ usuario.identificacion }}</td>
+                        <td>{{ usuario.nombres }}</td>
+                        <td>{{ usuario.apellidos }}</td>
+                        <td>
+                            <form method="POST" action="#">
+                                <select class="form-select" name="nuevo_rol" onchange="this.form.submit()">
+                                    {% for rol in roles %}
+                                    <option value="{{ rol }}" {% if usuario.rol == rol %}selected{% endif %}>{{ rol }}</option>
+                                    {% endfor %}
+                                </select>
+                            </form>
+                        </td>
+                        <td>
+                            <a href="#" class="btn btn-danger btn-sm">Eliminar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
