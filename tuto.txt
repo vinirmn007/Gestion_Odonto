@@ -1,0 +1,95 @@
+Crear base de datos:
+CREATE DATABASE Proyecto_Final;
+
+Crear tablas:
+
+CREATE TABLE HistorialMedico (
+    codigo_historial INT AUTO_INCREMENT PRIMARY KEY,
+    patologias_pasadas TEXT,
+    alergias TEXT,
+    tratamiento TEXT
+);
+
+CREATE TABLE Persona (
+    identificacion INT AUTO_INCREMENT PRIMARY KEY,
+    nombres VARCHAR(100),
+    apellidos VARCHAR(100),
+    fecha_nacimiento DATE,
+    email VARCHAR(100) UNIQUE,
+    celular VARCHAR(20) UNIQUE,
+    cod_historial INT,
+    FOREIGN KEY (cod_historial) REFERENCES HistorialMedico(codigo_historial)
+);
+
+CREATE TABLE Rol (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50),
+    descripcion TEXT,
+    iden_persona INT,
+    FOREIGN KEY (iden_persona) REFERENCES Persona(identificacion)
+);
+
+CREATE TABLE Cuenta (
+    identificacion INT PRIMARY KEY,
+    usuario VARCHAR(50) UNIQUE,
+    contrasena VARCHAR(100),
+    FOREIGN KEY (identificacion) REFERENCES Persona(identificacion)
+);
+
+CREATE TABLE Odontologo (
+    identificacion_odon INT PRIMARY KEY,
+    codigo_licencia VARCHAR(50) UNIQUE,
+    FOREIGN KEY (identificacion_odon) REFERENCES Persona(identificacion)
+);
+
+CREATE TABLE CitaMedica (
+    codigo_cita INT AUTO_INCREMENT PRIMARY KEY,
+    estado VARCHAR(50),
+    motivo TEXT,
+    observaciones TEXT,
+    fecha DATE,
+    hora TIME,
+    iden_paciente INT,
+    iden_odontologo INT,
+    cod_historial INT,
+    cod_diagnostico INT,
+    UNIQUE (fecha, hora),
+    FOREIGN KEY (iden_paciente) REFERENCES Persona(identificacion),
+    FOREIGN KEY (iden_odontologo) REFERENCES Odontologo(identificacion_odon)
+);
+
+CREATE TABLE Diagnostico (
+    codigo_diagnostico INT AUTO_INCREMENT PRIMARY KEY,
+    descripcion TEXT,
+    examen TEXT,
+    cod_cita INT,
+    FOREIGN KEY (cod_cita) REFERENCES CitaMedica(codigo_cita)
+);
+
+CREATE TABLE Receta (
+    codigo_receta INT AUTO_INCREMENT PRIMARY KEY,
+    dosis TEXT,
+    medicamento TEXT,
+    cod_diagnostico INT,
+    FOREIGN KEY (cod_diagnostico) REFERENCES Diagnostico(codigo_diagnostico)
+);
+
+Crear usuario:
+CREATE USER 'admin_base'@'localhost' IDENTIFIED BY 'Admin.123';
+GRANT ALL PRIVILEGES ON Proyecto_Final.* TO 'admin_base'@'localhost';
+FLUSH PRIVILEGES;
+
+Para entrar a la base:
+mysql -u admin_base -p
+
+Crear venv e instalar librerias:
+python3 -m venv .venv
+source .venv/bin/activate
+pip install flask flask_mysqldb
+
+Si sale error:
+sudo apt update
+sudo apt install python3-dev default-libmysqlclient-dev build-essential pkg-config
+
+
+

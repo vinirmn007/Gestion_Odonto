@@ -1,0 +1,48 @@
+# 🔹 Archivos y carpetas de Visual Studio Code
+.vscode/
+.vscode/*
+
+# 🔹 Archivos y carpetas de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.swp
+*.swo
+.DS_Store
+
+# 🔹 Entornos virtuales
+venv/
+.venv/
+env/
+.env/
+*.env
+
+# 🔹 Dependencias de Python
+pip-log.txt
+pip-delete-this-directory.txt
+
+# 🔹 Archivos de Flask y caché
+instance/
+*.log
+*.sqlite3
+*.db
+
+# 🔹 Archivos de Jupyter Notebook
+.ipynb_checkpoints/
+
+# 🔹 Archivos de distribución de Python
+build/
+dist/
+*.egg-info/
+*.egg
+
+# 🔹 Archivos de compilación Cython
+*.c
+*.so
+
+# 🔹 Archivos de depuración y otros
+*.bak
+*.tmp
+*.lock
+*.log
