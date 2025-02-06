@@ -2,12 +2,12 @@ from flask import Flask
 from config import app
 
 #Rutas de controladores
-from controller.login_con import login_controller
+from controller.users_con import user_controller
 
 #Rutas de vistas
 from views.login_view import login_view
 
-app.register_blueprint(login_controller)
+app.register_blueprint(user_controller)
 app.register_blueprint(login_view)
 
 if __name__ == '__main__':

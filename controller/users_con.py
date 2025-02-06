@@ -3,9 +3,9 @@ from flask import Blueprint, json, render_template, request, redirect, url_for, 
 #Importar el mysql
 from config import mysql
 
-login_controller = Blueprint('login_controller', __name__)
+user_controller = Blueprint('user_controller', __name__)
 
-@login_controller.route('/registro', methods=['POST'])
+@user_controller.route('/registro', methods=['POST'])
 def regis_user():
     nombres = request.form['nombres']
     apellidos = request.form['apellidos']
@@ -28,3 +28,18 @@ def regis_user():
     cur.close()
     
     return jsonify({'message': 'Usuario registrado correctamente'}), 200
+
+@user_controller.route('/login', methods=['POST'])
+def login_user():
+    usuario = request.form['usuario']
+    contrasena = request.form['contrasena']
+
+    cur = mysql.connection.cursor()
+    cur.execute(f"SELECT * FROM Cuenta WHERE usuario = '{usuario}' AND contrasena = '{contrasena}'")
+    data = cur.fetchone()
+    cur.close()
+
+    if data:
+        return jsonify({'message': 'Usuario logeado correctamente'}), 200
+    else:
+        return jsonify({'message': 'Usuario o contraseña incorrecta'}), 400
