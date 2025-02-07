@@ -32,14 +32,14 @@ def save_diagnostico():
     data = r.json().get('data')
     if r.status_code == 200:
         flash('Diagnostico registrado correctamente', 'success')
-        return redirect('/diagnostico')
+        return redirect('/diagnostico/all')
     else:
         flash('Error al registrar diagnostico' + str(data), 'error')
         return redirect(request.referrer)
     
 @diagnostico_view.route('/diagnostico/eliminar', methods=['POST'])
 def eliminar_diagnostico():
-    codigo_diagnostico = request.form('codigo_diagnostico')
+    codigo_diagnostico = request.form.get('codigo_diagnostico')
     r = requests.delete(f'http://localhost:5000/bd/diagnostico/delete', data=json.dumps({'codigo_diagnostico': codigo_diagnostico}), headers={'Content-Type': 'application/json'})
     data = r.json().get('data')
     if r.status_code == 200:

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Información de la Receta{% endblock %}
+{% block content %}
+<style>
+    .recipe-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f8f9fa;
+        margin: 30px;
+    }
+    .recipe-card {
+        width: 90%;
+        max-width: 1200px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+    }
+    .recipe-info {
+        border-left: 3px solid #007bff;
+        padding-left: 30px;
+    }
+    .recipe-info div {
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+    .btn-container {
+        margin-top: 30px;
+    }
+</style>
+<div class="right_col" role="main">
+    <div class="">
+        <div class="title_left">
+            <a href="/receta/all" class="btn btn-dark">Atrás</a>
+            <h3 class="mt-4">Detalles de la Receta <strong>#{{ receta.id }}</strong></h3>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="recipe-container">
+        <div class="recipe-card row">
+            <!-- Sección de Información de la Receta -->
+            <div class="col-md-12 recipe-info">
+                <div><strong>ID de Receta:</strong> {{ receta.id }}</div>
+                <div><strong>Medicamento:</strong> {{ receta.medicamento }}</div>
+                <div><strong>Dosis:</strong> {{ receta.dosis }}</div>
+                <div><strong>Código de Diagnóstico:</strong> {{ receta.cod_diagnostico }}</div>
+                <div class="text-start mt-4">
+                    <a href="#" class="btn btn-success btn-lg"> Editar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -27,10 +27,10 @@
                     onclick="fillEditForm('{{ diagnostico.codigo_diagnostico }}', '{{ diagnostico.descripcion }}', '{{ diagnostico.examen }}', '{{ diagnostico.cod_cita }}')">
                     <i class="bi bi-pencil-square me-1"></i> Editar
                 </button>
-                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"
-                    onclick="setDeleteId('{{ diagnostico.codigo_diagnostico }}')">
-                    <i class="bi bi-trash me-1"></i> Eliminar
-                </button>
+                <form action="/diagnostico/eliminar" method="post" class="d-inline">
+                    <input type="hidden" name="codigo_diagnostico" value="{{ diagnostico['codigo_diagnostico'] }}">
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro que deseas eliminar este diagnostico?');">Eliminar</button>
+                </form>
             </td>
         </tr>
         {% endfor %}
@@ -61,27 +61,6 @@
                         <input type="number" class="form-control" id="editCodCita" name="cod_cita" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Confirmar Eliminación</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                ¿Estás seguro de que deseas eliminar este diagnóstico?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <form id="deleteForm" method="POST">
-                    <input type="hidden" name="codigo_diagnostico" id="codigo_diagnostico">
-                    <button type="submit" class="btn btn-danger">Eliminar</button>
                 </form>
             </div>
         </div>
