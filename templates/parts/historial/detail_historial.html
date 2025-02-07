@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Información de Paciente{% endblock %}
+
+{% block content %}
+    <div class="container py-4">
+        <h1 class="mb-4 text-center">Detalle del Historial Médico</h1>
+
+        <form action="/historial/update" method="post">
+            <input type="hidden" name="codigo_historial" value="{{ historial.codigo_historial }}">
+
+            <div class="mb-3">
+                <label class="form-label">Patologías Pasadas</label>
+                <textarea class="form-control" name="patologias_pasadas" readonly>{{ historial.patologias_pasadas }}</textarea>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Alergias</label>
+                <textarea class="form-control" name="alergias" readonly>{{ historial.alergias }}</textarea>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Tratamiento</label>
+                <textarea class="form-control" name="tratamiento" readonly>{{ historial.tratamiento }}</textarea>
+            </div>
+
+            <div class="text-end">
+                <button type="button" class="btn btn-warning" id="editButton" onclick="enableEditMode()">Editar</button>
+                <button type="submit" class="btn btn-success d-none" id="saveButton">Guardar</button>
+            </div>
+        </form>
+
+        <a href="/historial/all" class="btn btn-secondary mt-3">Volver a la lista</a>
+    </div>
+
+    <script>
+        function enableEditMode() {
+            document.querySelectorAll("textarea").forEach(el => el.removeAttribute("readonly"));
+            document.getElementById("saveButton").classList.remove("d-none");
+            document.getElementById("editButton").classList.add("d-none");
+        }
+    </script>
+{% endblock %}
