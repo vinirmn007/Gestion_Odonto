@@ -52,7 +52,6 @@ CREATE TABLE CitaMedica (
     iden_paciente INT,
     iden_odontologo INT,
     cod_historial INT,
-    cod_diagnostico INT,
     UNIQUE (fecha, hora),
     FOREIGN KEY (iden_paciente) REFERENCES Persona(identificacion),
     FOREIGN KEY (iden_odontologo) REFERENCES Odontologo(identificacion_odon)
