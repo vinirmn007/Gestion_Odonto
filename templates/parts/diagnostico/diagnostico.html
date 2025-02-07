@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block title %}Listado de Diagnósticos{% endblock %}
+{% block content %}
+<h2>Listado de Diagnósticos</h2>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Código</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Examen</th>
+            <th scope="col">Código de Cita</th>
+            <th scope="col">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for diagnostico in diagnosticos %}
+        <tr scope="row">
+            <td>{{ diagnostico.codigo_diagnostico }}</td>
+            <td>{{ diagnostico.descripcion }}</td>
+            <td>{{ diagnostico.examen }}</td>
+            <td>{{ diagnostico.cod_cita }}</td>
+            <td>
+                <a href="/diagnostico/{{ diagnostico.codigo_diagnostico }}" class="btn btn-primary me-2">
+                    <i class="bi bi-eye me-1"></i> Ver
+                </a>
+                <button class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#editModal"
+                    onclick="fillEditForm('{{ diagnostico.codigo_diagnostico }}', '{{ diagnostico.descripcion }}', '{{ diagnostico.examen }}', '{{ diagnostico.cod_cita }}')">
+                    <i class="bi bi-pencil-square me-1"></i> Editar
+                </button>
+                <form action="/diagnostico/eliminar" method="post" class="d-inline">
+                    <input type="hidden" name="codigo_diagnostico" value="{{ diagnostico['codigo_diagnostico'] }}">
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro que deseas eliminar este diagnostico?');">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Modal de Edición -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Editar Diagnóstico</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editForm" method="POST" action="/diagnostico/update">
+                    <input type="hidden" name="codigo_diagnostico" id="editCodigoDiagnostico">
+                    <div class="mb-3">
+                        <label for="editDescripcion" class="form-label">Descripción</label>
+                        <textarea class="form-control" id="editDescripcion" name="descripcion" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editExamen" class="form-label">Examen</label>
+                        <input type="text" class="form-control" id="editExamen" name="examen" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editCodCita" class="form-label">Código de Cita</label>
+                        <input type="number" class="form-control" id="editCodCita" name="cod_cita" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function fillEditForm(codigo, descripcion, examen, codCita) {
+        document.getElementById('editCodigoDiagnostico').value = codigo;
+        document.getElementById('editDescripcion').value = descripcion;
+        document.getElementById('editExamen').value = examen;
+        document.getElementById('editCodCita').value = codCita;
+    }
+
+    function setDeleteId(codigo) {
+        document.getElementById('deleteId').value = codigo;
+    }
+</script>
+
+{% endblock %}

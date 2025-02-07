@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Registro de Diagnóstico{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center">Registro de Diagnóstico</h2>
+
+            <!-- Mensajes Flash -->
+            {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+            <div class="flash-message-container">
+                {% for category, message in messages %}
+                {% set categoria = 'danger' if category == 'error' else category %}
+                <div class="alert alert-{{ categoria }}" role="alert">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
+
+            <!-- Formulario -->
+            <form action="{{ url_for('diagnostico_view.save_diagnostico') }}" method="POST">
+                <div class="mb-3">
+                    <label for="descripcion" class="form-label">Descripción</label>
+                    <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="examen" class="form-label">Examen Realizado</label>
+                    <input type="text" class="form-control" id="examen" name="examen" required>
+                </div>
+                <div class="mb-3">
+                    <label for="cod_cita" class="form-label">Código de Cita</label>
+                    <input type="text" class="form-control" id="cod_cita" name="cod_cita" required>
+                </div>
+                <button type="submit" class="btn btn-success w-100">Registrar Diagnóstico</button>
+            </form>
+
+            <p class="mt-3 text-center"><a href="{{ url_for('diagnostico_view.diagnostico') }}">Volver a la lista de diagnósticos</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

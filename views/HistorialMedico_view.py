@@ -1,5 +1,6 @@
 from flask import Blueprint, json, render_template, request, redirect, flash, session
 import requests
+from .users_view import get_session
 
 # Vista para Historial Médico
 historialMedico_view = Blueprint('historialMedico_view', __name__)
@@ -7,6 +8,12 @@ historialMedico_view = Blueprint('historialMedico_view', __name__)
 def form_historial():
     return render_template('/parts/historial/form_historial.html')
 
+
+sesion = get_session()
+
+@historialMedico_view.context_processor
+def inject_session():
+    return dict(sesion_templates=sesion)
 
 @historialMedico_view.route('/historial/all')
 def get_historiales():

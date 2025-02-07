@@ -1,10 +1,23 @@
-from flask import Blueprint, json, render_template, request, redirect, flash, session
+from flask import Blueprint, json, render_template, request, redirect, flash
 import requests
+from .users_view import get_session
 
 roles_view = Blueprint('roles_view', __name__)
 
+sesion = get_session()
+
+@roles_view.context_processor
+def inject_session():
+    return dict(sesion_templates=sesion)
+
 @roles_view.route('/admin')
 def admin():
+    if 'usuario' not in sesion:
+        flash('Debe iniciar sesión para acceder a esta página', 'error')
+        return redirect('/login')
+    if sesion['rol'] != 1:
+        flash('No tiene permisos para acceder a esta página', 'error')
+        return redirect('/home')
     r = requests.get('http://localhost:5000/bd/personas/all')
     data = r.json().get('data')
 
@@ -19,6 +32,12 @@ def admin():
     
 @roles_view.route('/admin/roles/save', methods=['POST'])
 def save_rol():
+    if 'usuario' not in sesion:
+        flash('Debe iniciar sesión para acceder a esta página', 'error')
+        return redirect('/login')
+    if sesion['rol'] != 1:
+        flash('No tiene permisos para acceder a esta página', 'error')
+        return redirect('/home')
     headers = {'Content-Type': 'application/json'}
     data_form = {
         'nombre': request.form['nombre'],
@@ -36,6 +55,12 @@ def save_rol():
     
 @roles_view.route('/admin/roles/delete/<int:id>', methods=['GET'])
 def delete_rol(id):
+    if 'usuario' not in sesion:
+        flash('Debe iniciar sesión para acceder a esta página', 'error')
+        return redirect('/login')
+    if sesion['rol'] != 1:
+        flash('No tiene permisos para acceder a esta página', 'error')
+        return redirect('/home')
     r = requests.delete(f'http://localhost:5000/bd/roles/delete/{id}')
     data = r.json().get('data')
     if r.status_code == 200:

@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block title %}Listado de Citas{% endblock %}
+{% block content %}
+<h2>Listado de Citas</h2>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Motivo</th>
+            <th scope="col">Observaciones</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Hora</th>
+            <th scope="col">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for cita in citas %}
+        <tr scope="row">
+            <td>{{ cita.motivo }}</td>
+            <td>{{ cita.observaciones }}</td>
+            <td>{{ cita.fecha }}</td>
+            <td>{{ cita.hora }}</td>
+                <td>
+                    <button class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#editModal"
+                        onclick="fillEditForm('{{ cita.codigo_cita }}', '{{ cita.motivo }}', '{{ cita.observaciones }}', '{{ cita.fecha }}', '{{ cita.hora }}')">
+                        <i class="bi bi-pencil-square me-1"></i> Editar
+                    </button>
+                    <form action="/citas/delete" method="POST" style="display:inline;">
+                        <input type="hidden" name="codigo_cita" value="{{ cita.codigo_cita }}">
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar esta cita?');">Eliminar</button>
+                    </form>
+                </td>
+                
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Modal de Edición -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Editar Cita</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editForm" method="POST" action="/citas/update">
+                    <input type="hidden" name="codigo_cita" id="editId">
+                    <div class="mb-3">
+                        <label for="editMotivo" class="form-label">Motivo</label>
+                        <input type="text" class="form-control" id="editMotivo" name="motivo" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editObservaciones" class="form-label">Observaciones</label>
+                        <textarea class="form-control" id="editObservaciones" name="observaciones" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editFecha" class="form-label">Fecha</label>
+                        <input type="date" class="form-control" id="editFecha" name="fecha" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editHora" class="form-label">Hora</label>
+                        <input type="time" class="form-control" id="editHora" name="hora" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="iden_paciente" class="form-label">Seleccionar Paciente</label>
+                        <select class="form-control" id="iden_paciente" name="iden_paciente" required>
+                            {% for paciente in personas %}
+                                <option value="{{ paciente.identificacion }}">{{ paciente.nombres }} {{ paciente.apellidos }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function fillEditForm(codigo_cita, motivo, observaciones, fecha, hora) {
+        document.getElementById('editId').value = codigo_cita;
+        document.getElementById('editMotivo').value = motivo;
+        document.getElementById('editObservaciones').value = observaciones;
+        document.getElementById('editFecha').value = fecha;
+        document.getElementById('editHora').value = hora;
+    }
+</script>
+{% endblock %}

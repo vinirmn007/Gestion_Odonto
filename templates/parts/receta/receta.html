@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block title %}Listado de Recetas{% endblock %}
+{% block content %}
+<h2>Listado de Recetas</h2>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Código</th>
+            <th scope="col">Dosis</th>
+            <th scope="col">Medicamento</th>
+            <th scope="col">Código de Diagnóstico</th>
+            <th scope="col">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for receta in recetas %}
+        <tr scope="row">
+            <td>{{ receta.codigo_receta }}</td>
+            <td>{{ receta.dosis }}</td>
+            <td>{{ receta.medicamento }}</td>
+            <td>{{ receta.cod_diagnostico }}</td>
+            <td>
+                <a href="/receta/{{ receta.codigo_receta }}" class="btn btn-primary me-2">
+                    <i class="bi bi-eye me-1"></i> Ver
+                </a>
+                <button class="btn btn-warning me-2" data-bs-toggle="modal" data-bs-target="#editModal"
+                    onclick="fillEditForm('{{ receta.codigo_receta }}', '{{ receta.dosis }}', '{{ receta.medicamento }}', '{{ receta.cod_diagnostico }}')">
+                    <i class="bi bi-pencil-square me-1"></i> Editar
+                </button>
+                <form action="/receta/eliminar" method="post" class="d-inline">
+                    <input type="hidden" name="codigo_receta" value="{{ receta.codigo_receta }}">
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro que deseas eliminar esta receta?');">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Modal de Edición -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Editar Receta</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editForm" method="POST" action="/receta/update">
+                    <input type="hidden" name="codigo_receta" id="editCodigoReceta">
+                    <div class="mb-3">
+                        <label for="editDosis" class="form-label">Dosis</label>
+                        <textarea class="form-control" id="editDosis" name="dosis" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editMedicamento" class="form-label">Medicamento</label>
+                        <input type="text" class="form-control" id="editMedicamento" name="medicamento" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editCodDiagnostico" class="form-label">Código de Diagnóstico</label>
+                        <input type="number" class="form-control" id="editCodDiagnostico" name="cod_diagnostico" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function fillEditForm(codigo, dosis, medicamento, codDiagnostico) {
+        document.getElementById('editCodigoReceta').value = codigo;
+        document.getElementById('editDosis').value = dosis;
+        document.getElementById('editMedicamento').value = medicamento;
+        document.getElementById('editCodDiagnostico').value = codDiagnostico;
+    }
+</script>
+{% endblock %}
