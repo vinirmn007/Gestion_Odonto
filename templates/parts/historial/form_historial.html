@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Registrar Historial Médico{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h1 class="mb-4 text-center">Registrar Nuevo Historial Médico</h1>
+
+    <form action="/historial/save" method="post">
+        <div class="mb-3">
+            <label class="form-label">Patologías Pasadas</label>
+            <textarea class="form-control" name="patologias_pasadas" required></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Alergias</label>
+            <textarea class="form-control" name="alergias" required></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Tratamiento</label>
+            <textarea class="form-control" name="tratamiento" required></textarea>
+        </div>
+
+        <div class="text-end">
+            <button type="submit" class="btn btn-primary">Registrar</button>
+            <a href="/historial/all" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -3,6 +3,10 @@ import requests
 
 # Vista para Historial Médico
 historialMedico_view = Blueprint('historialMedico_view', __name__)
+@historialMedico_view.route('/historial/form')
+def form_historial():
+    return render_template('/parts/historial/form_historial.html')
+
 
 @historialMedico_view.route('/historial/all')
 def get_historiales():
