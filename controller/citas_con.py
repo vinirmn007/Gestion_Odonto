@@ -37,7 +37,7 @@ def db_save_cita():
         #Insertar
         cur.execute(
             "INSERT INTO CitaMedica (motivo, observaciones, fecha, hora, iden_paciente, iden_odontologo) VALUES (%s, %s, %s, %s, %s, %s)",
-            (data['motivo'], data['observaciones'], data['fecha'], data['hora'], data['iden_paciente'], 1))
+            (data['motivo'], data['observaciones'], data['fecha'], data['hora'], data['iden_paciente'], data['iden_odontologo']))
         #Guardar
         mysql.connection.commit()
         cur.close()

@@ -1,7 +1,14 @@
 from flask import Blueprint, json, render_template, request, redirect, flash, session
 import requests
+from .users_view import get_session
 
 citas_view = Blueprint('citas_view', __name__)
+
+sesion = get_session()
+
+@citas_view.context_processor
+def inject_session():
+    return dict(sesion_templates=sesion)
 
 @citas_view.route('/citas/<string:estado>', methods=['GET'])
 def get_citas(estado):
@@ -24,7 +31,8 @@ def save_citas():
             'observaciones': request.form['observaciones'],
             'fecha': request.form['fecha'],
             'hora': request.form['hora'],
-            'iden_paciente': request.form['iden_paciente'],
+            'iden_paciente': sesion.get('persona').get('identificacion'),
+            'iden_odontologo': request.form['iden_odontologo']
         }
         print(data_form)
         r = requests.post('http://localhost:5000/bd/citas/save', data=json.dumps(data_form), headers=headers)
@@ -37,7 +45,7 @@ def save_citas():
             flash('Error al registrar en la base de datos: ' + str(data), 'error')
             return redirect(request.referrer)
     
-    rp = requests.get('http://localhost:5000/bd/personas/all')
+    rp = requests.get('http://localhost:5000/bd/odontologo/all')
     return render_template('/parts/citas/save_citas.html', personas= rp.json().get('data'))
 
 

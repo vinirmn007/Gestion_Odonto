@@ -28,10 +28,10 @@
         
         
         <div class="mb-3">
-            <label for="iden_paciente" class="form-label">Seleccionar Paciente</label>
-            <select class="form-control" id="iden_paciente" name="iden_paciente" required>
-                {% for paciente in personas %}
-                    <option value="{{ paciente.identificacion }}">{{ paciente.nombres }} {{ paciente.apellidos }}</option>
+            <label for="iden_odontologo" class="form-label">Seleccionar Odontologo</label>
+            <select class="form-control" id="iden_odontologo" name="iden_odontologo" required>
+                {% for odontologo in personas %}
+                    <option value="{{ odontologo.identificacion }}">{{ odontologo.nombres }} {{ odontologo.apellidos }} ({{ odontologo.codigo_licencia }})</option>
                 {% endfor %}
             </select>
         </div>
