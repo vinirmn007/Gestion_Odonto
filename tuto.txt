@@ -57,6 +57,13 @@ CREATE TABLE CitaMedica (
     FOREIGN KEY (iden_odontologo) REFERENCES Odontologo(identificacion_odon)
 );
 
+ALTER TABLE CitaMedica 
+MODIFY COLUMN estado ENUM('EN_ESPERA', 'AGENDADA', 'FINALIZADA', 'CANCELADA') NOT NULL DEFAULT 'EN_ESPERA';
+ALTER TABLE CitaMedica DROP COLUMN cod_diagnostico; 
+ALTER TABLE CitaMedica DROP COLUMN cod_historial;
+
+
+
 CREATE TABLE Diagnostico (
     codigo_diagnostico INT AUTO_INCREMENT PRIMARY KEY,
     descripcion TEXT,

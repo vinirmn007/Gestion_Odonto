@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %} Agendar Cita {% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Agendar Nueva Cita</h2>
+    <form action="/citas/save" method="POST">
+        <div class="mb-3">
+            <label for="motivo" class="form-label">Motivo</label>
+            <input type="text" class="form-control" id="motivo" name="motivo" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="observaciones" class="form-label">Observaciones</label>
+            <textarea class="form-control" id="observaciones" name="observaciones" rows="3"></textarea>
+        </div>
+        
+        <div class="mb-3">
+            <label for="fecha" class="form-label">Fecha</label>
+            <input type="date" class="form-control" id="fecha" name="fecha" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="hora" class="form-label">Hora</label>
+            <input type="time" class="form-control" id="hora" name="hora" required>
+        </div>
+        
+        
+        <div class="mb-3">
+            <label for="iden_paciente" class="form-label">Seleccionar Paciente</label>
+            <select class="form-control" id="iden_paciente" name="iden_paciente" required>
+                {% for paciente in personas %}
+                    <option value="{{ paciente.identificacion }}">{{ paciente.nombres }} {{ paciente.apellidos }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Guardar Cita</button>
+    </form>
+</div>
+{% endblock %}
