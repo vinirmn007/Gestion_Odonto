@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Información del Diagnóstico{% endblock %}
+{% block content %}
+<style>
+    .diagnosis-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f8f9fa;
+        margin: 30px;
+    }
+    .diagnosis-card {
+        width: 90%;
+        max-width: 1200px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+    }
+    .diagnosis-info {
+        border-left: 3px solid #007bff;
+        padding-left: 30px;
+    }
+    .diagnosis-info div {
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+    .btn-container {
+        margin-top: 30px;
+    }
+</style>
+<div class="right_col" role="main">
+    <div class="">
+        <div class="title_left">
+            <a href="/diagnostico/all" class="btn btn-dark">Atrás</a>
+            <h3 class="mt-4">Detalles del Diagnóstico <strong>#{{ diagnostico.codigo_diagnostico }}</strong></h3>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="diagnosis-container">
+        <div class="diagnosis-card row">
+            <!-- Sección de Información del Diagnóstico -->
+            <div class="col-md-12 diagnosis-info">
+                <div><strong>Código de Diagnóstico:</strong> {{ diagnostico.codigo_diagnostico }}</div>
+                <div><strong>Descripción:</strong> {{ diagnostico.descripcion }}</div>
+                <div><strong>Examen Requerido:</strong> {{ diagnostico.examen }}</div>
+                <div><strong>Código de Cita:</strong> {{ diagnostico.cod_cita }}</div>
+                <div class="text-start mt-4">
+                    <a href="#" class="btn btn-success btn-lg"> Editar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
