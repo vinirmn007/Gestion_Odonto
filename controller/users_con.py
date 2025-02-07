@@ -40,7 +40,7 @@ def db_login_user():
     cur.close()
 
     if data:
-        return jsonify({'msg': 'Ok', 'data': 'Usuario logeado correctamente'}), 200
+        return jsonify({'msg': 'Ok', 'data': data}), 200
     else:
         return jsonify({'msh': 'Error', 'data': 'Usuario o contraseña incorrecta'}), 400
     

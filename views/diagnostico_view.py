@@ -1,10 +1,23 @@
 from flask import Blueprint, json, render_template, request, redirect, flash, session, url_for
 import requests
+from .users_view import get_session
 
 diagnostico_view = Blueprint('diagnostico_view', __name__)
 
+sesion = get_session()
+
+@diagnostico_view.context_processor
+def inject_session():
+    return dict(sesion_templates=sesion)
+
 @diagnostico_view.route('/diagnostico/all')
 def diagnostico():
+    if 'usuario' not in sesion:
+        flash('Debe iniciar sesión para acceder a esta página', 'error')
+        return redirect('/login')
+    if sesion['rol'] != 1 or sesion['rol'] != 2:
+        flash('No tiene permisos para acceder a esta página', 'error')
+        return redirect('/home')
     r = requests.get('http://localhost:5000/bd/diagnostico/all')
     data = r.json().get('data')
     if r.status_code == 200:
@@ -15,6 +28,12 @@ def diagnostico():
 
 @diagnostico_view.route('/diagnostico/registro')
 def registro_diagnostico():
+    if 'usuario' not in sesion:
+        flash('Debe iniciar sesión para acceder a esta página', 'error')
+        return redirect('/login')
+    if sesion['rol'] != 1 or sesion['rol'] != 2:
+        flash('No tiene permisos para acceder a esta página', 'error')
+        return redirect('/home')
     return render_template('parts/diagnostico/registro_diagnostico.html')
 
 @diagnostico_view.route('/diagnostico/registro/save', methods=['POST'])
