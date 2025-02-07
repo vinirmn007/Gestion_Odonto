@@ -29,7 +29,6 @@
                         <td>{{ historial['tratamiento'] }}</td>
                         <td>
                             <a href="/historial/{{ historial['codigo_historial'] }}" class="btn btn-info btn-sm">Ver</a>
-                            <a href="/historial/{{ historial['codigo_historial'] }}/edit" class="btn btn-warning btn-sm">Editar</a>
                             <form action="/historial/delete" method="post" class="d-inline">
                                 <input type="hidden" name="codigo_historial" value="{{ historial['codigo_historial'] }}">
                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Seguro que deseas eliminar este historial?');">Eliminar</button>
