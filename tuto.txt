@@ -44,7 +44,7 @@ CREATE TABLE Odontologo (
 
 CREATE TABLE CitaMedica (
     codigo_cita INT AUTO_INCREMENT PRIMARY KEY,
-    estado VARCHAR(50),
+    estado ENUM('EN_ESPERA', 'AGENDADA', 'FINALIZADA', 'CANCELADA') NOT NULL DEFAULT 'EN_ESPERA',
     motivo TEXT,
     observaciones TEXT,
     fecha DATE,
