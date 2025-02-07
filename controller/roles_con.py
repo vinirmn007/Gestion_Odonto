@@ -33,7 +33,7 @@ def db_save_rol():
 
     try:
         cur = mysql.connection.cursor()
-        cur.execute(f"INSERT INTO Rol (nombre) VALUES ('{data['nombre']}')")
+        cur.execute(f"INSERT INTO Rol (nombre, descripcion) VALUES ('{data['nombre']}', '{data['descripcion']}')")
         mysql.connection.commit()
         cur.close()
 

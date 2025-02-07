@@ -54,7 +54,7 @@ def login_user():
     r = requests.post('http://localhost:5000/bd/login', data=json.dumps(data_form), headers=headers)
     data = r.json().get('data')
     if r.status_code == 200:
-
+        
         flash('Usuario logeado correctamente', 'success')
         return redirect('/home')
     else:
@@ -102,7 +102,7 @@ def update_persona():
         flash('Error al actualizar la persona: ' + str(data), 'error')
         return redirect(request.referrer)
     
-@user_view.route('/pacientes/delete/', methods=['POST'])
+@user_view.route('/pacientes/delete', methods=['POST'])
 def delete_persona():
     id = request.form['id']
     r = requests.delete(f'http://localhost:5000/bd/personas/delete', data=json.dumps({'id': id}), headers={'Content-Type': 'application/json'})
@@ -113,18 +113,26 @@ def delete_persona():
     else:
         flash('Error al eliminar la persona: ' + str(data), 'error')
         return redirect(request.referrer)
+
+@user_view.route('/pacientes/updateRol', methods=['POST'])
+def update_rol():
+    headers = {'Content-Type': 'application/json'}
+    data_form = {
+        'id_usuario' : request.form['id_usuario'],
+        'id_rol': request.form['id_rol']
+    }
+    #print(data_form)
+
+    r = requests.patch(f'http://localhost:5000/bd/personas/updateRol', data=json.dumps(data_form), headers=headers)
+    data = r.json().get('data')
+    if r.status_code == 200:
+        flash('Rol actualizado correctamente', 'success')
+        return redirect('/pacientes/all')
+    else:
+        flash('Error al actualizar el rol: ' + str(data), 'error')
+        return redirect(request.referrer)
     
 @user_view.route('/logout')
 def logout():
     session.clear()
     return redirect('/login')
-
-@user_view.route('/admin')
-def admin():
-    r = requests.get('http://localhost:5000/bd/personas/all')
-    data = r.json().get('data')
-    if r.status_code == 200:
-        return render_template('/parts/admin/admin.html', usuarios=data)
-    else:
-        flash('Error al obtener las personas: ' + str(data), 'error')
-        return redirect(request.referrer)
