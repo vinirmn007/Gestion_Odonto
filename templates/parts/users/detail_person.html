@@ -62,15 +62,13 @@
                         <a href="#" class="btn btn-success btn-lg"> Editar</a>
                     </div>
                     <div class="text-start mt-4">
-                        {% if paciente.cod_historial is not none %}
-                            <a href="#" class="btn btn-info btn-lg">
-                                 Ver Historial Médico
-                            </a>
-                        {% else %}
-                            <a href="#" class="btn btn-warning btn-lg">
-                                 Registrar Historial Médico
-                            </a>
-                        {% endif %}
+                        {% if historial %}
+                        <a href="/historial/{{ historial['codigo_historial'] }}" class="btn btn-warning btn-sm">Editar</a>
+                    {% else %}
+                        <a href="/historial/{{ paciente.cod_historial }}" class="btn btn-warning btn-sm">Registrar Historial Médico</a>
+                    {% endif %}
+                    
+                    
                     </div>
                 </div>
             </div>

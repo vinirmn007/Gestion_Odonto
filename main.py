@@ -4,14 +4,17 @@ from config import app
 #Rutas de controladores
 from controller.users_con import user_controller
 from controller.roles_con import roles_controller
+from controller.historialMedico_con import  historialMedico_controller
 
 #Rutas de vistas
 from views.users_view import user_view
+from views.HistorialMedico_view import historialMedico_view
 
 app.register_blueprint(user_controller)
 app.register_blueprint(roles_controller)
+app.register_blueprint(historialMedico_controller)
 app.register_blueprint(user_view)
-
+app.register_blueprint(historialMedico_view)
 if __name__ == '__main__':
     app.secret_key = 'key-gestion-ondontonenas'
     app.config['SESSION_TYPE'] = 'filesystem'
