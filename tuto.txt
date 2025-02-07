@@ -18,15 +18,15 @@ CREATE TABLE Persona (
     email VARCHAR(100) UNIQUE,
     celular VARCHAR(20) UNIQUE,
     cod_historial INT,
-    FOREIGN KEY (cod_historial) REFERENCES HistorialMedico(codigo_historial)
+    id_rol INT,
+    FOREIGN KEY (cod_historial) REFERENCES HistorialMedico(codigo_historial),
+    FOREIGN KEY (id_rol) REFERENCES Rol(id)
 );
 
 CREATE TABLE Rol (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(50),
-    descripcion TEXT,
-    iden_persona INT,
-    FOREIGN KEY (iden_persona) REFERENCES Persona(identificacion)
+    descripcion TEXT
 );
 
 CREATE TABLE Cuenta (

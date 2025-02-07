@@ -14,12 +14,13 @@ def db_regis_user():
     try:
         cur = mysql.connection.cursor() #Comenzar el cursor sql
         #Insertar
-        cur.execute(f"INSERT INTO Persona (nombres, apellidos, fecha_nacimiento, email, celular) VALUES ('{data['nombres']}', '{data['apellidos']}', '{data['fecha_nacimiento']}', '{data['email']}', '{data['celular']}')")
+        cur.execute(f"INSERT INTO Persona (nombres, apellidos, fecha_nacimiento, email, celular, id_rol) VALUES ('{data['nombres']}', '{data['apellidos']}', '{data['fecha_nacimiento']}', '{data['email']}', '{data['celular']}', 3)")
 
         iden_persona = cur.lastrowid #Obtener el id de persona
 
         cur.execute(f"INSERT INTO Cuenta (identificacion, usuario, contrasena) VALUES ('{iden_persona}', '{data['usuario']}', '{data['contrasena']}')")
         #Guardar
+
         mysql.connection.commit()
         cur.close()
         
@@ -93,5 +94,18 @@ def db_delete_persona():
         cur.close()
 
         return jsonify({'msg': 'Ok', 'data': 'Persona eliminada correctamente'}), 200
+    except Exception as e:
+        return jsonify({'msg': 'Error', 'data': str(e)}), 400
+
+@user_controller.route('/bd/personas/updateRol', methods=['PATCH'])
+def db_update_rol_persona():
+    data = request.json
+    try:
+        cur = mysql.connection.cursor()
+        cur.execute(f"UPDATE Persona SET id_rol = {int(data['id_rol'])} WHERE identificacion = {int(data['id_usuario'])}")
+        mysql.connection.commit()
+        cur.close()
+
+        return jsonify({'msg': 'Ok', 'data': 'Rol actualizado correctamente'}), 200
     except Exception as e:
         return jsonify({'msg': 'Error', 'data': str(e)}), 400
