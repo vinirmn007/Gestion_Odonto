@@ -24,10 +24,12 @@
                         onclick="fillEditForm('{{ cita.codigo_cita }}', '{{ cita.motivo }}', '{{ cita.observaciones }}', '{{ cita.fecha }}', '{{ cita.hora }}')">
                         <i class="bi bi-pencil-square me-1"></i> Editar
                     </button>
-                    <form action="/citas/delete" method="POST" style="display:inline;">
-                        <input type="hidden" name="codigo_cita" value="{{ cita.codigo_cita }}">
-                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar esta cita?');">Eliminar</button>
-                    </form>
+                    {% if sesion_templates['rol'] == 1 or sesion_templates['rol'] == 2 %}
+                        <form action="/citas/delete" method="POST" style="display:inline;">
+                            <input type="hidden" name="codigo_cita" value="{{ cita.codigo_cita }}">
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar esta cita?');">Eliminar</button>
+                        </form>
+                    {% endif %}
                 </td>
                 
         </tr>
